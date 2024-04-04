@@ -7,6 +7,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>orders-rest</module>
+    </modules>
+
     <properties>
         <compiler-plugin.version>3.12.1</compiler-plugin.version>
         <maven.compiler.release>21</maven.compiler.release>
