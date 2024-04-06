@@ -7,12 +7,16 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.model.OrderDTO;
 import org.example.repository.OrderRepository;
+import org.example.service.OrdersMessageProducer;
 
 @Path("/api/v1/orders")
 public class OrderResource {
 
     @Inject
     OrderRepository orderRepository;
+
+    @Inject
+    OrdersMessageProducer ordersMessageProducer;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +50,7 @@ public class OrderResource {
     public Response create(OrderDTO orderDTO) {
         var order = orderDTO.toOrder();
         orderRepository.persist(order);
+        ordersMessageProducer.sendOrder(order); // sending to kafka
         return Response.ok(order).build();
     }
 

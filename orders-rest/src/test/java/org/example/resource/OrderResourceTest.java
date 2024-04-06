@@ -2,6 +2,7 @@ package org.example.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectSpy;
 import jakarta.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.example.model.Order;
 import org.example.model.OrderDTO;
 import org.example.repository.OrderRepository;
+import org.example.service.OrdersMessageProducer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,9 @@ class OrderResourceTest {
 
     @InjectSpy
     OrderRepository orderRepository;
+
+    @InjectMock
+    OrdersMessageProducer ordersMessageProducer;
 
     @Inject
     ObjectMapper objectMapper;
@@ -189,6 +194,7 @@ class OrderResourceTest {
         assertEquals(orderDTO.toOrder(), orderCreated);
 
         verify(orderRepository, times(1)).persist(any(Order.class));
+        verify(ordersMessageProducer, times(1)).sendOrder(orderCreated);
     }
 
     @Test
