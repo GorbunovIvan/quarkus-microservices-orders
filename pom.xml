@@ -9,6 +9,7 @@
 
     <modules>
         <module>orders-rest</module>
+        <module>orders-notifier</module>
     </modules>
 
     <properties>
