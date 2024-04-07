@@ -2,6 +2,17 @@
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
+<h2>
+<p>This is a simple multi-module microservices project built using Quarkus.</p>
+<p>It contains two microservices:</p>
+<ul>
+    <li>orders-rest - a simple rest service that uses MySQL to store orders.
+    But it can also send messages to Kafka about all the creation of new orders.</li>
+    <li>orders-notifier - a service that consumes messages about created orders from Kafka and sends them by email</li>
+</ul>
+</h2>
+<br/>
+
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
 ## Running the application in dev mode
